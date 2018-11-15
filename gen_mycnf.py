@@ -142,6 +142,7 @@ socket	= %s
 
 [mysql]
 prompt = (\\u@\\h) [\\d]>\\_
+no-auto-rehash
 
 [mysqld]
 # basic settings #
