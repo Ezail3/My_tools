@@ -23,7 +23,6 @@ def _argparse():
 
     return parser.parse_args()
 
-
 def get_innodb_buffer_pool_size(mem_sum):
     if mem_sum < 1024:
         innodb_buffer_pool_size = 128
@@ -33,7 +32,6 @@ def get_innodb_buffer_pool_size(mem_sum):
         innodb_buffer_pool_size = mem_sum * 0.75
 
     return int(innodb_buffer_pool_size)
-
 
 def get_innodb_log_file_size(mem_sum):
     if mem_sum < 1024:
@@ -49,7 +47,6 @@ def get_innodb_log_file_size(mem_sum):
 
     return innodb_log_file_size
 
-
 def get_innodb_max_undo_log_size(mem_sum):
     if mem_sum < 16 * 1024:
         innodb_max_undo_log_size = 1024
@@ -58,13 +55,11 @@ def get_innodb_max_undo_log_size(mem_sum):
 
     return innodb_max_undo_log_size
 
-
 def get_max_connections(mem_sum):
     max_connections = int(mem_sum * 0.3)
     max_connections = max_connections if max_connections < 1024 else 1024
 
     return max_connections
-
 
 def get_session_mem_size(mem_free, max_connections):
     # read_rnd_buffer_size==sort_buffer_size==join_buffer_size==tmp_table_size==max_allowed_packet==read_buffer_size*2
@@ -84,11 +79,8 @@ def get_session_mem_size(mem_free, max_connections):
                    sort_buffer_size=2 * session_mem_size,
                    max_allowed_packet=2 * session_mem_size,
                    read_rnd_buffer_size=2 * session_mem_size)
-
+    # session['read_buffer_size']
     return session
-
-
-# session['read_buffer_size']
 
 def get_thread_cache_size(mem_sum):
     mem_cache_size = 64 if mem_sum > 4 * 1024 else 32
@@ -141,6 +133,7 @@ innodb_thread_concurrency = 4 * thread_set
 table_open_cache_instances = 4 * thread_set
 innodb_write_io_threads = thread_set
 innodb_read_io_threads = thread_set
+
 
 mycnf = '''
 [client]
